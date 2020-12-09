@@ -1,0 +1,37 @@
+version: '3.7'
+
+services:
+  app:
+    image: quay.io/keycloak/keycloak:11.0.2
+    container_name: micro-auth-app
+    environment:
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=admin
+      - DB_ADDR=db
+      - DB_VENDOR=mysql
+      - DB_DATABASE=micro_auth
+      - DB_PORT=3306
+      - DB_USER=root
+      - DB_PASSWORD=root
+
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+  db:
+    build: ./.docker/mysql
+    container_name: micro-auth-db
+    restart: always
+    tty: true
+    volumes:
+      - ./.docker/dbdata:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=micro_auth
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=root
+  adminer:
+    image: adminer
+    container_name: micro-auth-db-adminer
+    restart: always
+    ports:
+      - 8000:8080
