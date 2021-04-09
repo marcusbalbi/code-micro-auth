@@ -1,4 +1,21 @@
 {
   "workbench.colorTheme": "Visual Studio Dark",
-  "workbench.iconTheme": "material-icon-theme"
+  "workbench.iconTheme": "material-icon-theme",
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#d42bd422",
+    "activityBar.activeBorder": "#4f4f10",
+    "activityBar.background": "#d42bd422",
+    "activityBar.foreground": "#e7e7e7",
+    "activityBar.inactiveForeground": "#e7e7e799",
+    "activityBarBadge.background": "#4f4f10",
+    "activityBarBadge.foreground": "#e7e7e7",
+    "statusBar.background": "#aa22aa22",
+    "statusBar.foreground": "#e7e7e7",
+    "statusBarItem.hoverBackground": "#d42bd422",
+    "titleBar.activeBackground": "#aa22aa22",
+    "titleBar.activeForeground": "#e7e7e7",
+    "titleBar.inactiveBackground": "#aa22aa99",
+    "titleBar.inactiveForeground": "#e7e7e799"
+  },
+  "peacock.color": "#A2A2"
 }
