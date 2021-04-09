@@ -35,3 +35,10 @@ services:
     restart: always
     ports:
       - 8081:8080
+
+  frontend:
+    build: ./frontend
+    entrypoint: ./.docker/entrypoint.sh
+    container_name: micro-auth-frontend
+    volumes: 
+      - ./frontend:/home/node/app
