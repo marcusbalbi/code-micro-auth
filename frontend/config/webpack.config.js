@@ -76,17 +76,37 @@ const hasJsxRuntime = (() => {
     return false;
   }
 })();
+const keycloakTemplates = [];
 const themesDir = fs
   .readdirSync(paths.keycloakThemePath, { withFileTypes: true })
   .filter((item) => item.isDirectory())
   .map((dir) => dir.name);
 
   for(const themeDir of themesDir) {
-    const pagesDir = fs.readdirSync(path.join(paths.keycloakThemePath, themeDir))
+    const pagesDirs = fs.readdirSync(path.join(paths.keycloakThemePath, themeDir))
       .filter((dir) => dir.endsWith('-pages'))
-    console.log(themeDir, pagesDir);
+    for(const pagesDir of pagesDirs) {
+      const templatesDirs = fs.readdirSync(path.join(paths.keycloakThemePath, themeDir, pagesDir)).filter(dir => dir.endsWith("-template"));
+      for(const templateDir of templatesDirs) {
+        const ftlTemplates = fs.readdirSync(path.join(paths.keycloakThemePath, themeDir, pagesDir, templateDir)).filter(file => file.endsWith(".ftl"))
+        const componentPages = fs.readdirSync(path.join(paths.keycloakThemePath, themeDir, pagesDir, templateDir)).filter(file => file.endsWith(".page.tsx"))
+        if (ftlTemplates.length && componentPages.length) {
+          const ftlTemplate = ftlTemplates[0];
+          const componentPage = componentPages[0];
+          keycloakTemplates.push({
+            templateSrc: path.join(paths.keycloakThemePath, themeDir, pagesDir, templateDir, ftlTemplate),
+            templateOut: path.join(themeDir, pagesDir.replace("-pages", ""), ftlTemplate),
+            entry: {
+              chunk: ftlTemplate.replace(".ftl", ""),
+              path: path.join(paths.keycloakThemePath, themeDir, pagesDir, templateDir, componentPage),
+            }
+          })
+        }
+      }
+    }
   }
-  // process.exit(0);
+  console.log(keycloakTemplates);
+  process.exit(0);
 
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
