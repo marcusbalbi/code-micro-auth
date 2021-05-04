@@ -439,7 +439,7 @@ module.exports = function (webpackEnv) {
               loader: require.resolve("url-loader"),
               options: {
                 limit: imageInlineSizeLimit,
-                name: "static/media/[name].[hash:8].[ext]",
+                name: "media/[name].[hash:8].[ext]",
               },
             },
             // Process application JS with Babel.
@@ -473,9 +473,10 @@ module.exports = function (webpackEnv) {
                       },
                     },
                   ],
-                  isEnvDevelopment &&
-                    shouldUseReactRefresh &&
-                    require.resolve("react-refresh/babel"),
+                // nao precisa do hot reload
+                //   isEnvDevelopment &&
+                //     shouldUseReactRefresh &&
+                //     require.resolve("react-refresh/babel"),
                 ].filter(Boolean),
                 // This is a feature of `babel-loader` for webpack (not Babel itself).
                 // It enables caching results in ./node_modules/.cache/babel-loader/
