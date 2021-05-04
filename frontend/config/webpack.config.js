@@ -244,7 +244,7 @@ module.exports = function (webpackEnv) {
             return previous;
           }, {})
         : theme.templates.reduce((previous, current) => {
-            return {...previous, [current.entry.chunk]: current.entry.path}
+            return { ...previous, [current.entry.chunk]: current.entry.path };
           }, {}),
     output: {
       // The build folder.
@@ -705,9 +705,16 @@ module.exports = function (webpackEnv) {
             manifest[file.name] = file.path;
             return manifest;
           }, seed);
-          const entrypointFiles = entrypoints.main.filter(
-            (fileName) => !fileName.endsWith(".map")
-          );
+
+          // const entrypointFiles = entrypoints.main.filter(
+          //   (fileName) => !fileName.endsWith(".map")
+          // );
+
+          const entrypointFiles = Object.keys(
+            entrypoints
+          ).reduce((prev, curr) => {
+            return [...prev, ...entrypoints[curr]]
+          }, []).filter(filename => !filename.endsWith(".map"));
 
           return {
             files: manifestFiles,
